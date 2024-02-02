@@ -1,0 +1,23 @@
+[
+  {
+    "name": "De La Nonna",
+    "address": "710 E 4th Pl, Los Angeles, CA 90013",
+    "type": "Food",
+    "website": "https://www.delanonna.com/",
+    "phoneNumber": "(213) 221-1268"
+  },
+  {
+    "name": "Griffith Observatory",
+    "address": "2800 E Observatory Rd, Los Angeles, CA 90027",
+    "type": "View",
+    "website": "https://griffithobservatory.org/",
+    "phoneNumber": "(213) 473-0800"
+  },
+  {
+    "name": "The Getty",
+    "address": "1200 Getty Center Dr, Los Angeles, CA 90049",
+    "type": "Activity",
+    "website": "https://www.getty.edu/",
+    "phoneNumber": "(310) 440-7300"
+  }
+]

@@ -23,4 +23,7 @@ public class Try {
   
   private String type;
 
+  private String website;
+
+  private String phoneNumber;
 }
