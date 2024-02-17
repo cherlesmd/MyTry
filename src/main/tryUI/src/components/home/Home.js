@@ -1,5 +1,6 @@
 import React from "react";
-const Home = ({tries}) => {
-  return (<div>Welcome!!!</div>);
+import Hero from "../hero/Hero";
+const Home = ({ tries }) => {
+    return <Hero tries={tries} />;
 };
 export default Home;

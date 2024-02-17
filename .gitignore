@@ -55,6 +55,6 @@ build/
 .env.test.local
 .env.production.local
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+src/main/tryUI/build
+src/main/tryUI/node
+src/main/tryUI/node_modules
