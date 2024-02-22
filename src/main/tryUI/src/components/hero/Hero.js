@@ -5,7 +5,7 @@ const Hero = ({ tries }) => {
         <div>
             {tries?.map((item) => {
                 return (
-                    <div>
+                    <div className="border-solid border-b-[2px] border-b-black">
                         <p>{item.name}</p>
                     </div>
                 );

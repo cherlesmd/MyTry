@@ -3,7 +3,7 @@ import React from "react";
 
 const Layout = () => {
   return (
-    <main>
+    <main className="flex justify-between">
       <Outlet />
     </main>
   )
