@@ -8,7 +8,7 @@ const Header = () => {
             </div>
             <div className="flex flex-shrink-0 justify-between md:gap-3 items-center">
                 <a href="/">itinerary</a>
-                <a href="/">Charlie</a>
+                <a href="/">Profile</a>
             </div>
         </nav>
     );
