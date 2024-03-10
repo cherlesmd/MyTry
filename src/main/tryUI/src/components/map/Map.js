@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import mapboxgl from "!mapbox-gl";
 
-mapboxgl.accessToken = ""
+mapboxgl.accessToken = "";
 
 const Map = () => {
     const mapContainer = useRef(null);
@@ -20,6 +20,6 @@ const Map = () => {
             zoom: zoom,
         });
     });
-    return <div ref={mapContainer} className="h-72" />;
+    return <div ref={mapContainer} className="h-96 w-5/12" />;
 };
 export default Map;

@@ -22,7 +22,7 @@ function App() {
     }, []);
 
     return (
-        <div class="text-center">
+        <div class="box-border text-center">
             <Header />
             <MainLayout tries={tries} />
         </div>
