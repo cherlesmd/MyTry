@@ -5,28 +5,49 @@ import MainLayout from "./components/MainLayout";
 import Header from "./components/header/Header";
 
 function App() {
-    const [tries, setTries] = useState();
+  const [tries, setTries] = useState([]);
+  const [error, setError] = useState("");
 
-    const getTries = async () => {
-        try {
-            const response = await api.get("/api/v1/tries");
-            console.log(response.data);
-            setTries(response.data);
-        } catch (error) {
-            console.log(error);
-        }
+  useEffect(() => {
+    const getTries = async (latitude, longitude) => {
+      try {
+        const response = await api.get(
+          `/api/v1/tries?longitude=${longitude}&latitude=${latitude}`,
+        );
+        console.log(response.data);
+        setTries(response.data);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
-    useEffect(() => {
-        getTries();
-    }, []);
+    const fetchLocation = () => {
+      if (!navigator.geolocation) {
+        setError("Browser does not support geolocation");
+        return;
+      }
 
-    return (
-        <div class="box-border text-center">
-            <Header />
-            <MainLayout tries={tries} />
-        </div>
-    );
+      navigator.geolocation.getCurrentPosition(success, error);
+
+      function success(position) {
+        getTries(position.coords.latitude, position.coords.longitude);
+      }
+
+      function error() {
+        setError("Unable to retrieve current location");
+      }
+    };
+
+    fetchLocation();
+  }, []);
+
+  return (
+    <div className="box-border text-center">
+      <Header />
+      <MainLayout tries={tries} />
+      {error && <p>{error}</p>}
+    </div>
+  );
 }
 
 export default App;

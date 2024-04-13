@@ -1,7 +1,6 @@
 package com.charliemartinezdominguez.MyTry;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Distance;
@@ -24,9 +23,11 @@ public class TryController {
     private TryService tryService;
 
     @GetMapping
-    public ResponseEntity<List<Try>> getAllNear(@RequestParam("longitude") double longitude, @RequestParam("latitude") double latitude) {
+    public ResponseEntity<List<Try>> getAllNear(@RequestParam("longitude") double longitude,
+            @RequestParam("latitude") double latitude) {
         return new ResponseEntity<List<Try>>(
                 tryService.findNear(new Point(Double.valueOf(longitude), Double.valueOf(latitude)),
-                        new Distance(25.0, Metrics.KILOMETERS)), HttpStatus.OK);
+                        new Distance(25.0, Metrics.KILOMETERS)),
+                HttpStatus.OK);
     }
 }
