@@ -3,9 +3,6 @@ package com.charliemartinezdominguez.MyTry;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.geo.Distance;
-import org.springframework.data.geo.Metrics;
-import org.springframework.data.geo.Point;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,10 +21,9 @@ public class TryController {
 
     @GetMapping
     public ResponseEntity<List<Try>> getAllNear(@RequestParam("longitude") double longitude,
-            @RequestParam("latitude") double latitude) {
+            @RequestParam("latitude") double latitude, @RequestParam("distance") double distance) {
+
         return new ResponseEntity<List<Try>>(
-                tryService.findNear(new Point(Double.valueOf(longitude), Double.valueOf(latitude)),
-                        new Distance(25.0, Metrics.KILOMETERS)),
-                HttpStatus.OK);
+                tryService.findNear("661f43c121e852e0fdc00e81", longitude, latitude, distance), HttpStatus.OK);
     }
 }
