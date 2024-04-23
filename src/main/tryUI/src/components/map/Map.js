@@ -5,7 +5,7 @@ import mapboxgl from "!mapbox-gl";
 mapboxgl.accessToken =
   "";
 
-const Map = ({ location }) => {
+const Map = () => {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const [lng, setLng] = useState(null);

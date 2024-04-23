@@ -3,24 +3,15 @@ import api from "./api/axiosConfig";
 import { useState, useEffect } from "react";
 import MainLayout from "./components/MainLayout";
 import Header from "./components/header/Header";
+import DistanceButton from "./components/button/DistanceButton";
 
 function App() {
   const [tries, setTries] = useState([]);
   const [error, setError] = useState("");
+  const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
+  const [distance, setDistance] = useState("0");
 
   useEffect(() => {
-    const getTries = async (latitude, longitude) => {
-      try {
-        const response = await api.get(
-          `/api/v1/tries?longitude=${longitude}&latitude=${latitude}`,
-        );
-        console.log(response.data);
-        setTries(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
     const fetchLocation = () => {
       if (!navigator.geolocation) {
         setError("Browser does not support geolocation");
@@ -30,7 +21,10 @@ function App() {
       navigator.geolocation.getCurrentPosition(success, error);
 
       function success(position) {
-        getTries(position.coords.latitude, position.coords.longitude);
+        setLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
       }
 
       function error() {
@@ -39,12 +33,36 @@ function App() {
     };
 
     fetchLocation();
-  }, []);
+  }, [location]);
 
-  return (
+  const getTries = async (bDistance) => {
+    try {
+      const response = await api.get(
+        `/api/v1/tries?longitude=${location.longitude}&latitude=${location.latitude}&distance=${bDistance}`,
+      );
+      setTries(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getDistance = (data) => {
+    setDistance(data);
+    console.log(data);
+    getTries(data);
+  };
+
+  return distance === "0" ? (
     <div className="box-border text-center">
       <Header />
-      <MainLayout tries={tries} />
+      <DistanceButton getDistance={getDistance} />
+      {error && <p>{error}</p>}
+    </div>
+  ) : (
+    <div className="box-border text-center">
+      <Header />
+      <MainLayout tries={tries} getDistance={getDistance} />
       {error && <p>{error}</p>}
     </div>
   );
