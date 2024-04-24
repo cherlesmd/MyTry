@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import MainLayout from "./components/MainLayout";
 import Header from "./components/header/Header";
 import DistanceButton from "./components/button/DistanceButton";
+import { Route, Routes } from "react-router-dom";
+import UserTries from "./components/usertries/UserTries";
+import { Map } from "mapbox-gl";
 
 function App() {
   const [tries, setTries] = useState([]);
@@ -56,14 +59,21 @@ function App() {
   return distance === "0" ? (
     <div className="box-border text-center">
       <Header />
-      <DistanceButton getDistance={getDistance} />
-      {error && <p>{error}</p>}
+      <Routes>
+        <Route path="/" element={<DistanceButton getDistance={getDistance} />} />
+      </Routes>
     </div>
   ) : (
     <div className="box-border text-center">
       <Header />
-      <MainLayout tries={tries} getDistance={getDistance} />
-      {error && <p>{error}</p>}
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route path="/" element={<UserTries tries={tries} />}>
+            <Route path="/" element={<DistanceButton getDistance={getDistance} />} />
+          </Route>
+          <Route path="/" element={<Map />} />
+        </Route>
+      </Routes>
     </div>
   );
 }

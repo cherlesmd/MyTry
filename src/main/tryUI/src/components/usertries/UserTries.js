@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Fragment } from "react";
-import DistanceButton from "../button/DistanceButton";
+import { Outlet } from "react-router-dom";
 
-const UserTries = ({tries, getDistance}) => {
+const UserTries = ({ tries }) => {
   const [triesList, setTriesList] = useState(tries || null);
 
   function deleteTry(index) {
@@ -12,11 +12,10 @@ const UserTries = ({tries, getDistance}) => {
     console.log("set");
   }
 
-
   return (
     <Fragment>
       <ul>
-        <DistanceButton getDistance={getDistance} />
+        <Outlet />
         {tries?.map((item, index) => {
           return (
             <li key={index} className="h-8 mb-3 pt-1">

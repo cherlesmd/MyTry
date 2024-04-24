@@ -1,12 +1,10 @@
 import React from "react";
-import UserTries from "./usertries/UserTries";
-import Map from "./map/Map";
+import { Outlet } from "react-router-dom";
 
-const MainLayout = ({tries, getDistance}) => {
+const MainLayout = ({ tries, getDistance }) => {
   return (
     <main className="flex justify-between w-11/12 mx-auto px-36 pt-8">
-      <UserTries tries={tries} getDistance={getDistance} />
-      <Map />
+      <Outlet />
     </main>
   );
 };
