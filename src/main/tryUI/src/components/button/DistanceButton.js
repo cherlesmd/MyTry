@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 
 function classNames(...classes) {
@@ -6,10 +6,8 @@ function classNames(...classes) {
 }
 
 const DistanceButton = (prop) => {
-  const [distance, setDistance] = useState("0");
 
   function clickedDistance(d) {
-    setDistance(d.target.value);
     console.log(d.target.value);
     prop.getDistance(d.target.value);
   }

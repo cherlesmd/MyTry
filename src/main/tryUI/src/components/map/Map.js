@@ -5,34 +5,27 @@ import mapboxgl from "!mapbox-gl";
 mapboxgl.accessToken =
   "";
 
-const Map = () => {
+const Map = ({ lng, setLng, lat, setLat }) => {
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [lng, setLng] = useState(null);
-  const [lat, setLat] = useState(null);
   const [zoom, setZoom] = useState(13);
 
   useEffect(() => {
+    if (map.current) return; // initialize map only once
 
-    navigator.geolocation.getCurrentPosition((position) => {
-
-      if (map.current) return; // initialize map only once
-
-      map.current = new mapboxgl.Map({
-        container: mapContainer.current,
-        style: "mapbox://styles/mapbox/streets-v12",
-        center: [position.coords.longitude, position.coords.latitude],
-        zoom: zoom,
-      });
-
-      map.current.on("move", () => {
-        setLng(map.current.getCenter().lng.toFixed(4));
-        setLat(map.current.getCenter().lat.toFixed(4));
-        setZoom(map.current.getZoom().toFixed(2));
-      });
+    map.current = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: "mapbox://styles/mapbox/streets-v12",
+      center: [lng, lat],
+      zoom: zoom,
     });
 
-  }, [zoom]);
+    map.current.on("move", () => {
+      setLng(map.current.getCenter().lng.toFixed(4));
+      setLat(map.current.getCenter().lat.toFixed(4));
+      setZoom(map.current.getZoom().toFixed(2));
+    });
+  }, [zoom, lng, lat, setLng, setLat]);
 
   return <div ref={mapContainer} className="h-96 w-5/12" />;
 };
