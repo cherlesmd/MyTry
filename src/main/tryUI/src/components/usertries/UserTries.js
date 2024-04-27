@@ -1,12 +1,21 @@
 import { Fragment } from "react";
+import api from "../../api/axiosConfig";
 import DistanceButton from "../button/DistanceButton";
 
 const UserTries = ({ tries, setTries, getDistance }) => {
-  function deleteTry(index) {
-    console.log(index);
-    const updatedTries = tries.filter((_, i) => i !== index);
-    setTries(updatedTries);
-  }
+
+  const deleteTry = async (index) => {
+    try {
+      const response = await api.delete(
+        `/api/v1/tries?name=${tries[index].name}&longitude=${tries[index].location.x}&latitude=${tries[index].location.y}`,
+      );
+      const updatedTries = tries.filter((_, i) => i !== index);
+      setTries(updatedTries);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Fragment>

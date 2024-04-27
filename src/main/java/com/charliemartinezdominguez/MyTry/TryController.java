@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,5 +26,19 @@ public class TryController {
 
         return new ResponseEntity<List<Try>>(
                 tryService.findNear("661f43c121e852e0fdc00e81", longitude, latitude, distance), HttpStatus.OK);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<String> deleteUserTry(@RequestParam("name") String name,
+            @RequestParam("longitude") double longitude,
+            @RequestParam("latitude") double latitude) {
+
+        boolean deleted = tryService.deleteTry(name, longitude, latitude);
+
+        if (deleted) {
+            return new ResponseEntity<>("deleted", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("unable to delete", HttpStatus.NOT_FOUND);
+        }
     }
 }
