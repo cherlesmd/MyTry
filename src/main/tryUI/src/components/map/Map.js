@@ -1,6 +1,7 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, Fragment } from "react";
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import mapboxgl from "!mapbox-gl";
+import Search from "../search/Search";
 
 mapboxgl.accessToken =
   "";
@@ -27,6 +28,10 @@ const Map = ({ lng, setLng, lat, setLat }) => {
     });
   }, [zoom, lng, lat, setLng, setLat]);
 
-  return <div ref={mapContainer} className="h-96 w-5/12" />;
+  return (
+    <Fragment>
+      <div ref={mapContainer} className="h-96 w-5/12 z-1" />
+    </Fragment>
+  );
 };
 export default Map;

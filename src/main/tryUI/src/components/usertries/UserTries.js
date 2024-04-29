@@ -1,8 +1,9 @@
 import { Fragment } from "react";
 import api from "../../api/axiosConfig";
 import DistanceButton from "../button/DistanceButton";
+import Search from "../search/Search";
 
-const UserTries = ({ tries, setTries, getDistance }) => {
+const UserTries = ({ tries, setTries, getDistance, feature, setFeature }) => {
 
   const deleteTry = async (index) => {
     try {
@@ -11,7 +12,6 @@ const UserTries = ({ tries, setTries, getDistance }) => {
       );
       const updatedTries = tries.filter((_, i) => i !== index);
       setTries(updatedTries);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -19,7 +19,8 @@ const UserTries = ({ tries, setTries, getDistance }) => {
 
   return (
     <Fragment>
-      <ul>
+      <ul >
+        <Search feature={feature} setFeature={setFeature} tries={tries} setTries={setTries}></Search>
         <DistanceButton getDistance={getDistance}></DistanceButton>
         {tries?.map((item, index) => {
           return (

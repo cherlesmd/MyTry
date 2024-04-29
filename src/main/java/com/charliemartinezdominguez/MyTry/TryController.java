@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,7 @@ public class TryController {
     public ResponseEntity<List<Try>> getAllNear(@RequestParam("longitude") double longitude,
             @RequestParam("latitude") double latitude, @RequestParam("distance") double distance) {
 
+        // userid fixed after user validation
         return new ResponseEntity<List<Try>>(
                 tryService.findNear("661f43c121e852e0fdc00e81", longitude, latitude, distance), HttpStatus.OK);
     }
@@ -40,5 +42,14 @@ public class TryController {
         } else {
             return new ResponseEntity<>("unable to delete", HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PostMapping
+    public ResponseEntity<Try> newUserTry(@RequestParam("name") String name, @RequestParam("address") String address,
+            @RequestParam("longitude") double longitude,
+            @RequestParam("latitude") double latitude) {
+        
+        return new ResponseEntity<Try>(
+                tryService.createTry(name, address, longitude, latitude), HttpStatus.OK);
     }
 }

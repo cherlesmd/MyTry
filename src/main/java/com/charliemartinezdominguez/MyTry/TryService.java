@@ -36,4 +36,13 @@ public class TryService {
         }
         return false;
     }
+
+    public Try createTry(String name, String address, double longitude, double latitude) {
+        
+        GeoJsonPoint point = new GeoJsonPoint(longitude, latitude);
+        // userid fixed after user validation
+        ObjectId objectUserId = new ObjectId("661f43c121e852e0fdc00e81");
+        Try t = new Try(null, name, address, point, objectUserId);
+        return tryRepository.save(t);
+    }
 }
