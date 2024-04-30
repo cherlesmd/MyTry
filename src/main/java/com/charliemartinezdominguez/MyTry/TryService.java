@@ -25,10 +25,11 @@ public class TryService {
         return tryRepository.findByUserIdAndLocationNear(objectUserId, point, maxDistance);
     }
 
-    public boolean deleteTry(String name, double longitude, double latitude) {
+    public boolean deleteTry(String name, double longitude, double latitude, String userId) {
 
         GeoJsonPoint point = new GeoJsonPoint(longitude, latitude);
-        Optional<Try> userTry = tryRepository.findByNameAndLocation(name, point);
+        ObjectId objectUserId = new ObjectId(userId);
+        Optional<Try> userTry = tryRepository.findByNameAndLocationAndUserId(name, point, objectUserId);
 
         if (userTry.isPresent()) {
             tryRepository.delete(userTry.get());
@@ -37,11 +38,10 @@ public class TryService {
         return false;
     }
 
-    public Try createTry(String name, String address, double longitude, double latitude) {
+    public Try createTry(String name, String address, double longitude, double latitude, String userId) {
         
         GeoJsonPoint point = new GeoJsonPoint(longitude, latitude);
-        // userid fixed after user validation
-        ObjectId objectUserId = new ObjectId("661f43c121e852e0fdc00e81");
+        ObjectId objectUserId = new ObjectId(userId);
         Try t = new Try(null, name, address, point, objectUserId);
         return tryRepository.save(t);
     }

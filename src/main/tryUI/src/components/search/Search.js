@@ -22,7 +22,7 @@ export default function Search({ feature, setFeature, tries, setTries }) {
     const newTry = async (name) => {
         try {
             const response = await api.post(
-                `/api/v1/tries?name=${name}&address=${feature.properties.place_name}&longitude=${feature.geometry.coordinates[0]}&latitude=${feature.geometry.coordinates[1]}`,
+                `/api/v1/tries/661f43c121e852e0fdc00e81?name=${name}&address=${feature.properties.place_name}&longitude=${feature.geometry.coordinates[0]}&latitude=${feature.geometry.coordinates[1]}`,
             );
             const updatedTries = [...tries, response.data];
             setTries(updatedTries);

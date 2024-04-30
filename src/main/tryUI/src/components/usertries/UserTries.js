@@ -6,9 +6,10 @@ import Search from "../search/Search";
 const UserTries = ({ tries, setTries, getDistance, feature, setFeature }) => {
 
   const deleteTry = async (index) => {
+    console.log(tries[index].location.x);
     try {
       const response = await api.delete(
-        `/api/v1/tries?name=${tries[index].name}&longitude=${tries[index].location.x}&latitude=${tries[index].location.y}`,
+        `/api/v1/tries/661f43c121e852e0fdc00e81?name=${tries[index].name}&longitude=${tries[index].location.x}&latitude=${tries[index].location.y}`,
       );
       const updatedTries = tries.filter((_, i) => i !== index);
       setTries(updatedTries);
@@ -19,7 +20,7 @@ const UserTries = ({ tries, setTries, getDistance, feature, setFeature }) => {
 
   return (
     <Fragment>
-      <ul >
+      <ul>
         <Search feature={feature} setFeature={setFeature} tries={tries} setTries={setTries}></Search>
         <DistanceButton getDistance={getDistance}></DistanceButton>
         {tries?.map((item, index) => {

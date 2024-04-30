@@ -13,5 +13,5 @@ import org.springframework.stereotype.Repository;
 public interface TryRepository extends MongoRepository<Try, ObjectId> {
 
     List<Try> findByUserIdAndLocationNear(ObjectId userId, GeoJsonPoint point, Distance distance);
-    Optional<Try> findByNameAndLocation(String name, GeoJsonPoint point);
+    Optional<Try> findByNameAndLocationAndUserId(String name, GeoJsonPoint point, ObjectId userId);
 }
