@@ -1,4 +1,4 @@
-package com.charliemartinezdominguez.MyTry;
+package com.charliemartinezdominguez.MyTry.tries;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -22,5 +22,5 @@ public class Try {
 
     private String address;
     private GeoJsonPoint location;
-    private ObjectId userId;
+    private String username;
 }

@@ -1,4 +1,4 @@
-package com.charliemartinezdominguez.MyTry;
+package com.charliemartinezdominguez.MyTry.tries;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TryRepository extends MongoRepository<Try, ObjectId> {
 
-    List<Try> findByUserIdAndLocationNear(ObjectId userId, GeoJsonPoint point, Distance distance);
-    Optional<Try> findByNameAndLocationAndUserId(String name, GeoJsonPoint point, ObjectId userId);
+    List<Try> findByUsernameAndLocationNear(String username, GeoJsonPoint point, Distance distance);
+    Optional<Try> findByNameAndLocationAndUsername(String name, GeoJsonPoint point, String username);
 }
