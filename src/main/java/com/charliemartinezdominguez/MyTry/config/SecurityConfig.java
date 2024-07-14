@@ -2,6 +2,7 @@ package com.charliemartinezdominguez.MyTry.config;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,9 +45,9 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration ccfg = new CorsConfiguration();
         ccfg.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
-        ccfg.setAllowedMethods(Collections.singletonList("*"));
-        ccfg.setAllowedHeaders(Collections.singletonList("*"));
-        ccfg.setExposedHeaders(Collections.singletonList("*"));
+        ccfg.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PUT", "OPTIONS", "PATCH", "DELETE"));
+        ccfg.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        ccfg.setExposedHeaders(List.of("Authorization", "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", ccfg);
         return source;

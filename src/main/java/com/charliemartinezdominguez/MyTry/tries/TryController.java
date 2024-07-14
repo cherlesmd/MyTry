@@ -8,11 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 
 @RestController
 @RequestMapping("/api/v1/tries")
@@ -22,16 +21,20 @@ public class TryController {
     private TryService tryService;
 
     @GetMapping("")
-    public ResponseEntity<List<Try>> getAllNear(@RequestHeader("Authorization") String header, @RequestBody TryRequest request) {
-        
+    public ResponseEntity<List<Try>> getAllNear(@RequestHeader("Authorization") String header,
+            @RequestParam("longitude") double longitude, @RequestParam("latitude") double latitude,
+            @RequestParam("distance") double distance) {
+
         return new ResponseEntity<List<Try>>(
-                tryService.findNear(header, request), HttpStatus.OK);
+                tryService.findNear(header, longitude, latitude, distance), HttpStatus.OK);
     }
 
     @DeleteMapping("")
-    public ResponseEntity<String> deleteUserTry(@RequestHeader("Authorization") String header, @RequestBody DeleteRequest request) {
+    public ResponseEntity<String> deleteUserTry(@RequestHeader("Authorization") String header,
+            @RequestParam("name") String name, @RequestParam("longitude") double longitude,
+            @RequestParam("latitude") double latitude) {
 
-        boolean deleted = tryService.deleteTry(header, request);
+        boolean deleted = tryService.deleteTry(header, name, longitude, latitude);
 
         if (deleted) {
             return new ResponseEntity<>("deleted", HttpStatus.OK);
@@ -41,10 +44,12 @@ public class TryController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Try> newUserTry(@RequestHeader("Authorization") String header, @RequestBody AddRequest request) {
+    public ResponseEntity<Try> newUserTry(@RequestHeader("Authorization") String header,
+            @RequestParam("name") String name, @RequestParam("address") String address,
+            @RequestParam("longitude") double longitude, @RequestParam("latitude") double latitude) {
 
         return new ResponseEntity<Try>(
-                tryService.createTry(header, request), HttpStatus.OK);
+                tryService.createTry(header, name, address, longitude, latitude), HttpStatus.OK);
     }
 
 }
