@@ -49,7 +49,9 @@ public class SecurityConfig {
         ccfg.setAllowedHeaders(List.of("Authorization", "Content-Type", "Access-Control-Allow-Headers", "Access-Control-Allow-Origin",
                 "Access-Control-Request-Method", "Access-Control-Request-Headers", "Origin",
                 "Cache-Control", "Content-Type"));
-        ccfg.setExposedHeaders(List.of("Authorization", "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"));
+        ccfg.setExposedHeaders(List.of("Authorization", "Access-Control-Allow-Headers", "Access-Control-Allow-Origin",
+                "Access-Control-Request-Method", "Access-Control-Request-Headers", "Origin",
+                "Cache-Control", "Content-Type", "Access-Control-Allow-Credentials"));
         ccfg.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", ccfg);
