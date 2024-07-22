@@ -44,7 +44,7 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration ccfg = new CorsConfiguration();
-        ccfg.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+        ccfg.setAllowedOrigins(Arrays.asList("https://mytryfrontend-490397e0f41d.herokuapp.com"));
         ccfg.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PUT", "OPTIONS", "PATCH", "DELETE"));
         ccfg.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         ccfg.setExposedHeaders(List.of("Authorization", "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"));
