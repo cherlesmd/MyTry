@@ -44,14 +44,10 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration ccfg = new CorsConfiguration();
-        ccfg.setAllowedOrigins(Arrays.asList("https://mytryfrontend-490397e0f41d.herokuapp.com"));
-        ccfg.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PUT", "OPTIONS", "PATCH", "DELETE"));
-        ccfg.setAllowedHeaders(List.of("Authorization", "Content-Type", "Access-Control-Allow-Headers", "Access-Control-Allow-Origin",
-                "Access-Control-Request-Method", "Access-Control-Request-Headers", "Origin",
-                "Cache-Control", "Content-Type"));
-        ccfg.setExposedHeaders(List.of("Authorization", "Access-Control-Allow-Headers", "Access-Control-Allow-Origin",
-                "Access-Control-Request-Method", "Access-Control-Request-Headers", "Origin",
-                "Cache-Control", "Content-Type", "Access-Control-Allow-Credentials"));
+        ccfg.setMaxAge(Long.MAX_VALUE);
+        ccfg.addAllowedHeader("*");
+        ccfg.addAllowedOrigin("*");
+        ccfg.addAllowedMethod("*");
         ccfg.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", ccfg);
