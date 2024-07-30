@@ -3,6 +3,7 @@ package com.charliemartinezdominguez.MyTry.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -18,9 +19,9 @@ import lombok.RequiredArgsConstructor;
 
 @Configuration
 @RequiredArgsConstructor
+@EnableMongoRepositories(basePackages = "com.charliemartinezdominguez.MyTry.user")
 public class ApplicationConfig {
 
-    @Autowired
     private final UserRepository repository;
 
     @Bean
