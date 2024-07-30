@@ -46,7 +46,7 @@ public class SecurityConfig {
         CorsConfiguration ccfg = new CorsConfiguration();
         ccfg.setMaxAge(Long.MAX_VALUE);
         ccfg.addAllowedHeader("*");
-        ccfg.addAllowedOrigin("*");
+        ccfg.addAllowedOrigin("https://mytryfrontend-490397e0f41d.herokuapp.com");
         ccfg.addAllowedMethod("*");
         ccfg.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
