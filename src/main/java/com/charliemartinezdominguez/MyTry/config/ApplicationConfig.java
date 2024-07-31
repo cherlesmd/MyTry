@@ -18,7 +18,6 @@ import com.charliemartinezdominguez.MyTry.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
-@RequiredArgsConstructor
 @EnableMongoRepositories(basePackages = "com.charliemartinezdominguez.MyTry.user")
 public class ApplicationConfig {
 
