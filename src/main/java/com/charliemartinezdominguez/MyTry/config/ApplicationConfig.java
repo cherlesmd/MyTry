@@ -24,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 @Lazy
 @Configuration
 @RequiredArgsConstructor
+@EnableMongoRepositories(basePackageClasses = UserRepository.class)
 public class ApplicationConfig {
 
     private final UserRepository repository;
