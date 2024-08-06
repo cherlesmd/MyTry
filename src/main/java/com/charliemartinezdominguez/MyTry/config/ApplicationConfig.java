@@ -18,13 +18,10 @@ import com.charliemartinezdominguez.MyTry.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
+@RequiredArgsConstructor
 public class ApplicationConfig {
 
     private final UserRepository repository;
-
-    public ApplicationConfig(UserRepository repository) {
-        this.repository = repository;
-    }
 
     @Bean
     public UserDetailsService userDetailsService() {
