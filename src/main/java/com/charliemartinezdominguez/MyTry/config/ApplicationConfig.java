@@ -20,9 +20,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.charliemartinezdominguez.MyTry.user.UserRepository;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 
-@Lazy
 @Configuration
 public class ApplicationConfig {
 
@@ -33,6 +33,7 @@ public class ApplicationConfig {
         this.repository = repository;
     }
 
+    @PostConstruct
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> repository.findByUsername(username)
