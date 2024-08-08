@@ -24,11 +24,14 @@ import lombok.RequiredArgsConstructor;
 
 @Lazy
 @Configuration
-@RequiredArgsConstructor
 public class ApplicationConfig {
 
-    @Autowired
     private final UserRepository repository;
+
+    @Autowired
+    public ApplicationConfig(UserRepository repository) {
+        this.repository = repository;
+    }
 
     @Bean
     public UserDetailsService userDetailsService() {

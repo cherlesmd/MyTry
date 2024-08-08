@@ -2,6 +2,7 @@ package com.charliemartinezdominguez.MyTry.auth;
 
 import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,6 +28,15 @@ public class AuthenticationService {
     private final UserRepository repository;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+
+    @Autowired
+    public AuthenticationService(PasswordEncoder passwordEncoder, UserRepository repository, JwtService jwtService,
+            AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
+        this.jwtService = jwtService;
+        this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public User createUser(RegisterRequest request) {
         var user = User.builder().username(request.getUsername())
