@@ -21,7 +21,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 
 @Service
-@AllArgsConstructor
 public class AuthenticationService {
 
     private final PasswordEncoder passwordEncoder;
