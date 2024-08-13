@@ -1,14 +1,7 @@
 package com.charliemartinezdominguez.MyTry.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.data.mongodb.MongoDatabaseFactory;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -20,20 +13,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.charliemartinezdominguez.MyTry.user.UserRepository;
 
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
+@RequiredArgsConstructor
 public class ApplicationConfig {
 
     private final UserRepository repository;
 
-    @Autowired
-    public ApplicationConfig(UserRepository repository) {
-        this.repository = repository;
-    }
-
-    @PostConstruct
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> repository.findByUsername(username)

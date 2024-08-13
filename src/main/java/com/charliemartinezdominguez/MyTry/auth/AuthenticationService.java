@@ -21,21 +21,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class AuthenticationService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository repository;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-
-    @Autowired
-    public AuthenticationService(PasswordEncoder passwordEncoder, UserRepository repository, JwtService jwtService,
-            AuthenticationManager authenticationManager) {
-        this.authenticationManager = authenticationManager;
-        this.jwtService = jwtService;
-        this.repository = repository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     public User createUser(RegisterRequest request) {
         var user = User.builder().username(request.getUsername())
