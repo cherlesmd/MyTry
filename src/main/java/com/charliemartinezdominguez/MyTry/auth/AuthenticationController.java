@@ -1,8 +1,11 @@
 package com.charliemartinezdominguez.MyTry.auth;
 
 import java.io.IOException;
+import java.time.Duration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,13 +32,11 @@ public class AuthenticationController {
             HttpServletResponse response) {
 
         var user = service.createUser(request);
-        var refreshToken = jwtService.generateRefreshToken(user);
-
-        Cookie cookie = new Cookie("refreshToken", refreshToken);
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        cookie.setMaxAge(604800000);
-        response.addCookie(cookie);
+        String accessToken = jwtService.generateRefreshToken(user);
+        // 7 days
+        ResponseCookie cookie = ResponseCookie.from("accessToken").value(accessToken).maxAge(Duration.ofSeconds(604800))
+                .httpOnly(true).secure(true).path("/").sameSite("None").build();
+        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
         return ResponseEntity.ok(service.register(user));
     }
@@ -45,19 +46,17 @@ public class AuthenticationController {
             HttpServletResponse response) {
 
         var user = service.findUser(request);
-        var refreshToken = jwtService.generateToken(user);
+        var accessToken = jwtService.generateToken(user);
 
-        Cookie cookie = new Cookie("refreshToken", refreshToken);
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        cookie.setMaxAge(604800000);
-        response.addCookie(cookie);
+        ResponseCookie cookie = ResponseCookie.from("accessToken").value(accessToken).maxAge(Duration.ofSeconds(604800))
+                .httpOnly(true).secure(true).path("/").sameSite("None").build();
+        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
         return ResponseEntity.ok(service.authenticate(user));
     }
 
     @PostMapping("/refresh-token")
-    public void refreshToken(HttpServletRequest request, HttpServletResponse response)
+    public void accessToken(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         service.refreshToken(request, response);
     }
@@ -65,7 +64,7 @@ public class AuthenticationController {
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletResponse response) {
 
-        Cookie cookie = new Cookie("refreshToken", null);
+        Cookie cookie = new Cookie("accessToken", null);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
         cookie.setMaxAge(0);

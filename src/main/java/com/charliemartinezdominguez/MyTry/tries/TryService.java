@@ -23,11 +23,9 @@ public class TryService {
     private final TryRepository tryRepository;
     private final JwtService jwtService;
 
-    public List<Try> findNear(String header, double longitude, double latitude, double distance) {
-        final String accessToken;
+    public List<Try> findNear(String accessToken, double longitude, double latitude, double distance) {
         final String userName;
 
-        accessToken = header.substring(7);
         userName = jwtService.extractUsername(accessToken);
 
         GeoJsonPoint point = new GeoJsonPoint(longitude, latitude);
@@ -35,12 +33,10 @@ public class TryService {
         return tryRepository.findByUsernameAndLocationNear(userName, point, maxDistance);
     }
 
-    public boolean deleteTry(String header, String name, double longitude, double latitude) {
+    public boolean deleteTry(String accessToken, String name, double longitude, double latitude) {
 
-        final String accessToken;
         final String userName;
 
-        accessToken = header.substring(7);
         userName = jwtService.extractUsername(accessToken);
         GeoJsonPoint point = new GeoJsonPoint(longitude, latitude);
         Optional<Try> userTry = tryRepository.findByNameAndLocationAndUsername(name, point, userName);
@@ -52,11 +48,9 @@ public class TryService {
         return false;
     }
 
-    public Try createTry(String header, String name, String address, double longitude, double latitude) {
-        final String accessToken;
+    public Try createTry(String accessToken, String name, String address, double longitude, double latitude) {
         final String userName;
 
-        accessToken = header.substring(7);
         userName = jwtService.extractUsername(accessToken);
 
         GeoJsonPoint point = new GeoJsonPoint(longitude, latitude);

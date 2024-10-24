@@ -58,7 +58,7 @@ public class AuthenticationService {
 
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("refreshToken")) {
+                if (cookie.getName().equals("accessToken")) {
                     return cookie.getValue();
                 }
             }
