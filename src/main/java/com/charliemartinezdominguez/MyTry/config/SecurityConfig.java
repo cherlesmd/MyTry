@@ -40,7 +40,7 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration ccfg = new CorsConfiguration();
-        ccfg.setAllowedOrigins(Arrays.asList("https://mytryfrontend-490397e0f41d.herokuapp.com"));
+        ccfg.setAllowedOrigins(Arrays.asList("https://www.mytry.codes"));
         ccfg.setAllowedMethods(Arrays.asList("*"));
         ccfg.setAllowedHeaders(Arrays.asList("*"));
         ccfg.setExposedHeaders(Arrays.asList("*"));
