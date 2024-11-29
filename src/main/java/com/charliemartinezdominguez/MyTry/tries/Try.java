@@ -1,5 +1,7 @@
 package com.charliemartinezdominguez.MyTry.tries;
 
+import java.util.List;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,12 +17,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Try {
 
-    @Id
-    private ObjectId tryId;
+  @Id
+  private ObjectId tryId;
 
-    private String name;
+  private String name;
 
-    private String address;
-    private GeoJsonPoint location;
-    private String username;
+  private String address;
+  private GeoJsonPoint location;
+  private String username;
+  private List<String> itineraries;
 }
