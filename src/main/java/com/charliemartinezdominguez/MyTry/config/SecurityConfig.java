@@ -21,32 +21,32 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private static final String[] WHITE_LIST_URL = { "/api/v1/auth/**" };
-    private final AuthenticationProvider authenticationProvider;
-    private final JwtAuthenticationFilter jwtAuthFilter;
+  private static final String[] WHITE_LIST_URL = { "/api/v1/auth/**" };
+  private final AuthenticationProvider authenticationProvider;
+  private final JwtAuthenticationFilter jwtAuthFilter;
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable)
-                .cors(Customizer.withDefaults())
-                .authorizeHttpRequests(
-                        req -> req.requestMatchers(WHITE_LIST_URL).permitAll().anyRequest().authenticated())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-        return http.build();
-    }
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http.csrf(AbstractHttpConfigurer::disable)
+        .cors(Customizer.withDefaults())
+        .authorizeHttpRequests(
+            req -> req.requestMatchers(WHITE_LIST_URL).permitAll().anyRequest().authenticated())
+        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .authenticationProvider(authenticationProvider)
+        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+    return http.build();
+  }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration ccfg = new CorsConfiguration();
-        ccfg.setAllowedOrigins(Arrays.asList("https://www.mytry.codes"));
-        ccfg.setAllowedMethods(Arrays.asList("*"));
-        ccfg.setAllowedHeaders(Arrays.asList("*"));
-        ccfg.setExposedHeaders(Arrays.asList("*"));
-        ccfg.setAllowCredentials(true);
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", ccfg);
-        return source;
-    }
+  @Bean
+  CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration ccfg = new CorsConfiguration();
+    ccfg.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+    ccfg.setAllowedMethods(Arrays.asList("*"));
+    ccfg.setAllowedHeaders(Arrays.asList("*"));
+    ccfg.setExposedHeaders(Arrays.asList("*"));
+    ccfg.setAllowCredentials(true);
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", ccfg);
+    return source;
+  }
 }

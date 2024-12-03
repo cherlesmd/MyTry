@@ -1,5 +1,6 @@
 package com.charliemartinezdominguez.MyTry.user;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -28,7 +29,8 @@ public class User implements UserDetails {
   private String username;
   private String password;
   private Role role;
-  private List<String> itineraries;
+  @Builder.Default
+  private List<String> itineraries = new ArrayList<>();
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -17,38 +17,38 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/tries")
 public class TryController {
 
-    @Autowired
-    private TryService tryService;
+  @Autowired
+  private TryService tryService;
 
-    @GetMapping("")
-    public ResponseEntity<List<Try>> getAllNear(@CookieValue(value = "accessToken") String token,
-            @RequestParam("longitude") double longitude, @RequestParam("latitude") double latitude,
-            @RequestParam("distance") double distance) {
+  @GetMapping("")
+  public ResponseEntity<List<Try>> getAllNear(@CookieValue(value = "accessToken") String token,
+      @RequestParam("longitude") double longitude, @RequestParam("latitude") double latitude,
+      @RequestParam("distance") double distance) {
 
-        return new ResponseEntity<List<Try>>(
-                tryService.findNear(token, longitude, latitude, distance), HttpStatus.OK);
+    return new ResponseEntity<List<Try>>(
+        tryService.findNear(token, longitude, latitude, distance), HttpStatus.OK);
+  }
+
+  @DeleteMapping("")
+  public ResponseEntity<String> deleteUserTry(@CookieValue(value = "accessToken") String token,
+      @RequestParam("name") String name, @RequestParam("longitude") double longitude,
+      @RequestParam("latitude") double latitude) {
+
+    boolean deleted = tryService.deleteTry(token, name, longitude, latitude);
+
+    if (deleted) {
+      return new ResponseEntity<>("deleted", HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>("unable to delete", HttpStatus.NOT_FOUND);
     }
+  }
 
-    @DeleteMapping("")
-    public ResponseEntity<String> deleteUserTry(@CookieValue(value = "accessToken") String token,
-            @RequestParam("name") String name, @RequestParam("longitude") double longitude,
-            @RequestParam("latitude") double latitude) {
+  @PostMapping("")
+  public ResponseEntity<Try> newUserTry(@CookieValue(value = "accessToken") String token,
+      @RequestParam("name") String name, @RequestParam("address") String address,
+      @RequestParam("longitude") double longitude, @RequestParam("latitude") double latitude) {
 
-        boolean deleted = tryService.deleteTry(token, name, longitude, latitude);
-
-        if (deleted) {
-            return new ResponseEntity<>("deleted", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("unable to delete", HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @PostMapping("")
-    public ResponseEntity<Try> newUserTry(@CookieValue(value = "accessToken") String token,
-            @RequestParam("name") String name, @RequestParam("address") String address,
-            @RequestParam("longitude") double longitude, @RequestParam("latitude") double latitude) {
-
-        return new ResponseEntity<Try>(
-                tryService.createTry(token, name, address, longitude, latitude), HttpStatus.OK);
-    }
+    return new ResponseEntity<Try>(
+        tryService.createTry(token, name, address, longitude, latitude), HttpStatus.OK);
+  }
 }
