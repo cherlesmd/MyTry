@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +28,14 @@ public class TryController {
 
     return new ResponseEntity<List<Try>>(
         tryService.findNear(token, longitude, latitude, distance), HttpStatus.OK);
+  }
+
+  @GetMapping("/{itinerary}")
+  public ResponseEntity<List<Try>> getItinerary(@CookieValue(value = "accessToken") String token,
+      @PathVariable String itinerary) {
+
+    return new ResponseEntity<List<Try>>(
+        tryService.getItinerary(token, itinerary), HttpStatus.OK);
   }
 
   @DeleteMapping("")
@@ -50,5 +59,17 @@ public class TryController {
 
     return new ResponseEntity<Try>(
         tryService.createTry(token, name, address, longitude, latitude), HttpStatus.OK);
+  }
+
+  @PostMapping("/{tag}/{name}")
+  public ResponseEntity<String> updateTryTag(@CookieValue(value = "accessToken") String token,
+      @PathVariable String tag, @PathVariable String name) {
+    boolean res = tryService.updateTryItineraries(token, tag, name);
+
+    if (res) {
+      return new ResponseEntity<>("added", HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>("unable to add", HttpStatus.NOT_FOUND);
+    }
   }
 }
