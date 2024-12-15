@@ -18,58 +18,63 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/tries")
 public class TryController {
 
-  @Autowired
-  private TryService tryService;
+    @Autowired
+    private TryService tryService;
 
-  @GetMapping("")
-  public ResponseEntity<List<Try>> getAllNear(@CookieValue(value = "accessToken") String token,
-      @RequestParam("longitude") double longitude, @RequestParam("latitude") double latitude,
-      @RequestParam("distance") double distance) {
+    @GetMapping("")
+    public ResponseEntity<List<Try>> getAllNear(@CookieValue(value = "accessToken") String token,
+            @RequestParam(required = false, name = "longitude", defaultValue = "0") double longitude,
+            @RequestParam(required = false, name = "latitude", defaultValue = "0") double latitude,
+            @RequestParam("distance") double distance) {
 
-    return new ResponseEntity<List<Try>>(
-        tryService.findNear(token, longitude, latitude, distance), HttpStatus.OK);
-  }
+        if (longitude == 0) {
+            return ResponseEntity.noContent().build();
+        }
 
-  @GetMapping("/{itinerary}")
-  public ResponseEntity<List<Try>> getItinerary(@CookieValue(value = "accessToken") String token,
-      @PathVariable String itinerary) {
-
-    return new ResponseEntity<List<Try>>(
-        tryService.getItinerary(token, itinerary), HttpStatus.OK);
-  }
-
-  @DeleteMapping("")
-  public ResponseEntity<String> deleteUserTry(@CookieValue(value = "accessToken") String token,
-      @RequestParam("name") String name, @RequestParam("longitude") double longitude,
-      @RequestParam("latitude") double latitude) {
-
-    boolean deleted = tryService.deleteTry(token, name, longitude, latitude);
-
-    if (deleted) {
-      return new ResponseEntity<>("deleted", HttpStatus.OK);
-    } else {
-      return new ResponseEntity<>("unable to delete", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<List<Try>>(
+                tryService.findNear(token, longitude, latitude, distance), HttpStatus.OK);
     }
-  }
 
-  @PostMapping("")
-  public ResponseEntity<Try> newUserTry(@CookieValue(value = "accessToken") String token,
-      @RequestParam("name") String name, @RequestParam("address") String address,
-      @RequestParam("longitude") double longitude, @RequestParam("latitude") double latitude) {
+    @GetMapping("/{itinerary}")
+    public ResponseEntity<List<Try>> getItinerary(@CookieValue(value = "accessToken") String token,
+            @PathVariable String itinerary) {
 
-    return new ResponseEntity<Try>(
-        tryService.createTry(token, name, address, longitude, latitude), HttpStatus.OK);
-  }
-
-  @PostMapping("/{tag}/{name}")
-  public ResponseEntity<String> updateTryTag(@CookieValue(value = "accessToken") String token,
-      @PathVariable String tag, @PathVariable String name) {
-    boolean res = tryService.updateTryItineraries(token, tag, name);
-
-    if (res) {
-      return new ResponseEntity<>("added", HttpStatus.OK);
-    } else {
-      return new ResponseEntity<>("unable to add", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<List<Try>>(
+                tryService.getItinerary(token, itinerary), HttpStatus.OK);
     }
-  }
+
+    @DeleteMapping("")
+    public ResponseEntity<String> deleteUserTry(@CookieValue(value = "accessToken") String token,
+            @RequestParam("name") String name, @RequestParam("longitude") double longitude,
+            @RequestParam("latitude") double latitude) {
+
+        boolean deleted = tryService.deleteTry(token, name, longitude, latitude);
+
+        if (deleted) {
+            return new ResponseEntity<>("deleted", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("unable to delete", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("")
+    public ResponseEntity<Try> newUserTry(@CookieValue(value = "accessToken") String token,
+            @RequestParam("name") String name, @RequestParam("address") String address,
+            @RequestParam("longitude") double longitude, @RequestParam("latitude") double latitude) {
+
+        return new ResponseEntity<Try>(
+                tryService.createTry(token, name, address, longitude, latitude), HttpStatus.OK);
+    }
+
+    @PostMapping("/{tag}/{name}")
+    public ResponseEntity<String> updateTryTag(@CookieValue(value = "accessToken") String token,
+            @PathVariable String tag, @PathVariable String name) {
+        boolean res = tryService.updateTryItineraries(token, tag, name);
+
+        if (res) {
+            return new ResponseEntity<>("added", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("unable to add", HttpStatus.NOT_FOUND);
+        }
+    }
 }
